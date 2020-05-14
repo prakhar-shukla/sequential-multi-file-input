@@ -215,5 +215,3 @@
     }
 
 }))
-
-multiFileUpload.init()
