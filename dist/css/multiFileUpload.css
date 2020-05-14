@@ -1,0 +1,77 @@
+.file-multi-upload-input{
+    border: 1px solid #DCDCDC;
+    border-radius: 5px;
+    padding: 15px;
+    font-family: sans-serif;
+}
+.file-multi-upload-input .interactor {
+    display: flex;
+    align-items: center;
+}
+.file-multi-upload-input .actions {
+    margin-left: auto;
+}
+.file-multi-upload-input .description {
+    font-size: 12px;
+}
+.file-multi-upload-input .file-names {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.file-multi-upload-input .file-identifier {
+    background: #0CCE6B0A;
+    border: 1px dashed #0CCE6B;
+    align-items: center;
+    border-radius: 5px;
+    display: flex;
+    padding: 10px;
+    font-size: 12px;
+    height: 18px;
+}
+.file-multi-upload-input .file-name {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    min-width: 0;
+    padding-right: 5px;
+}
+.file-multi-upload-input .file-wrapper{
+    flex-basis:calc(100% * (1/2) - 5px);
+    margin: 10px 0;
+    min-width: 0;
+}
+.file-multi-upload-input .file-identifier.error{
+    border: 1px dashed #D93025;
+}
+.file-multi-upload-input .file-identifier button{
+    margin-left: auto;
+    white-space: nowrap;
+}
+.file-multi-upload-input .error-msg {
+    color: #D93025;
+    font-size: 12px;
+    margin-top: 10px;
+}
+.file-multi-upload-input .action-btn {
+    color: #3597EC;
+}
+.file-multi-upload-input button{
+    cursor: pointer;
+    background: none;
+    border: 0;
+    outline: 0;
+    font-size: 14px;
+}
+.file-multi-upload-input input[type="file"] {
+    display: none;
+}
+.file-multi-upload-input .hidden{
+    display: none;
+}
+
+@media  (max-width: 768px){
+    .file-multi-upload-input .file-wrapper{
+        flex-basis: 100%;
+    }
+} 
