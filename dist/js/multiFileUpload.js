@@ -12,7 +12,7 @@
 
     const configObj = {
         maxSize: 1 * 1024 * 1024,
-        maxFiles: 2,
+        maxFiles: 4,
         allowedTypes: ["application/pdf", "image/jpeg"],
         interceptors: null,
         callback: null,
