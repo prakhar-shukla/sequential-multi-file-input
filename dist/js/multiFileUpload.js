@@ -16,7 +16,7 @@
         allowedTypes: ["application/pdf", "image/jpeg"],
         interceptors: null,
         callback: null,
-        autoInit : false
+        autoInit: false
     }
 
     function fileUploadEvent(currentInput) {
@@ -48,25 +48,25 @@
             this.querySelector(".initial-upload").classList.add("hidden");
             this.querySelector(".add-more-file").classList.remove("hidden");
         }
-        
+
         //If unsupported file is uploaded, immediately remove its corresponding input element along with the file 
         if (!validity) {
             currentInput.remove();
             this.querySelector(".add-more-file").classList.add("hidden");
         }
-        
+
         //Remove previous erroneous file name whenever any new file is uploaded  
         if ((validity && errorFileName.length === 1) || (!validity && errorFileName.length > 1)) {
             errorFileName[0].closest(".file-wrapper").remove();
         }
-        
+
         if (validity && multiInputs.length > configObj.maxFiles) {
             this.querySelector(".initial-upload").classList.add("hidden");
             this.querySelector(".add-more-file").classList.add("hidden");
         }
-        
+
         //Call callback function if any
-        if (configObj.callback  && typeof configObj.callback === "function") {
+        if (configObj.callback && typeof configObj.callback === "function") {
             configObj.callback(currentInput);
             return;
         }
@@ -184,30 +184,54 @@
 
     function injectHtml(element) {
         const TEMPLATE = '<div class="interactor"> <div class="placeholder"> <div class="label"></div> <div class="description"></div> </div> <div class="actions"> <button class="initial-upload action-btn upload-trigger">Upload</button> </div> </div> <div class="file-names"> </div> <div class="file-inputs"> <button class="add-more-file action-btn upload-trigger hidden">Attach more files</button> </div>';
-        if(!element.querySelector('.interactor')){
-            element.innerHTML = TEMPLATE;
-            element.querySelector('.interactor .label').textContent = element.dataset.label || "Upload Documents";
-            element.querySelector('.interactor .description').textContent = element.dataset.description || "";
-            
+        if (!element.querySelector('.interactor')) {
+            let styledElement = document.createElement('div');
             let initialInput = getNewInput(element.id + "-input-n-0");
-            element.querySelector(".file-inputs").append(initialInput);
+
+            styledElement.innerHTML = TEMPLATE;
+            styledElement.querySelector('.interactor .label').textContent = element.dataset.label || "Upload Documents";
+            styledElement.querySelector('.interactor .description').textContent = element.dataset.description || "";
+            styledElement.querySelector(".file-inputs").append(initialInput);
+
+            element.innerHTML = styledElement.innerHTML;
+
+        }
+    }
+
+    function mutationCallback(mutationList) {
+        for (let mutation of mutationList) {
+            if (mutation.type === 'childList') {
+                for (let node of mutation.addedNodes) {
+                    if (!(node instanceof HTMLElement)) continue;
+                    if (node.className && node.className.includes('file-multi-upload-input')) {
+                        injectHtml(node)
+                    }
+                }
+            }
         }
     }
 
     function init(configObjCustom) {
         // Apply user options if user has defined some
         if (configObjCustom) {
-            configObj = Object.assign(configObj, configObjCustom)
+            Object.assign(configObj, configObjCustom)
         }
-        
+
         Array.from(document.querySelectorAll(".file-multi-upload-input")).forEach(
             function (element) {
                 injectHtml(element)
-        })
+            })
 
         //Event listners
         document.addEventListener("click", multiFileInputClickEventHandler, false);
         document.addEventListener("change", multiFileInputUploadEventHandler, false);
+
+        //Mutation Observer
+        if (configObj.autoInit) {
+            const observer = new MutationObserver(mutationCallback);
+            const config = { childList: true, subtree: true };
+            observer.observe(document.body, config)
+        }
     }
 
     return {
