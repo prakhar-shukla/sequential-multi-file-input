@@ -127,7 +127,10 @@
 
     function validateFileType(file) {
         let allowedTypes = configObj.allowedTypes;
-        if (allowedTypes.includes(file.type)) {
+        if(allowedTypes === 'all'){
+            return { valid: true }
+        }
+        else if (allowedTypes.includes(file.type)) {
             return { valid: true }
         }
         else {
