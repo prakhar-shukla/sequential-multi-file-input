@@ -186,7 +186,7 @@
     }
 
     function injectHtml(element) {
-        const TEMPLATE = '<div class="interactor"> <div class="placeholder"> <div class="label"></div> <div class="description"></div> </div> <div class="actions"> <button class="initial-upload action-btn upload-trigger">Upload</button> </div> </div> <div class="file-names"> </div> <div class="file-inputs"> <button class="add-more-file action-btn upload-trigger hidden">Attach more files</button> </div>';
+        const TEMPLATE = '<div class="interactor"> <div class="placeholder"> <div class="label"></div> <div class="description"></div> </div> <div class="actions"> <button class="initial-upload action-btn upload-trigger">Upload</button> </div> </div> <div class="file-names"> </div> <button class="add-more-file action-btn upload-trigger hidden">Attach more files</button> <div class="file-inputs"></div>';
         if (!element.querySelector('.interactor')) {
             let styledElement = document.createElement('div');
             let initialInput = getNewInput(element.id + "-input-n-0");
