@@ -6,7 +6,7 @@
     } else if (typeof exports === 'object') {
         module.exports = factory();
     } else {
-        window.multiFileUpload = factory();
+        window.multiFileInput = factory();
     }
 }(function () {
 
@@ -149,7 +149,7 @@
         let element = event.target;
         while (element) {
             if (element.nodeName === "BUTTON" && element.className.includes("upload-trigger")) {
-                let parentElement = element.closest(".file-multi-upload-input");
+                let parentElement = element.closest(".sequential-multi-file-input");
                 let parentId = parentElement.id;
 
                 if (configObj.interceptors && configObj.interceptors.hasOwnProperty(parentId)
@@ -160,7 +160,7 @@
                 triggerChooseFileEvent.call(parentElement);
             }
             else if (element.nodeName === "BUTTON" && element.className.includes("file-delete")) {
-                let parentElement = element.closest(".file-multi-upload-input");
+                let parentElement = element.closest(".sequential-multi-file-input");
                 let targetElement = element.closest(".file-identifier");
                 fileDeleteEvent.call(parentElement, targetElement);
             }
@@ -173,7 +173,7 @@
         let element = event.target;
         while (element) {
             if (element.nodeName === "INPUT" && element.className.includes("file-input")) {
-                let parentElement = element.closest(".file-multi-upload-input");
+                let parentElement = element.closest(".sequential-multi-file-input");
                 let targetElement = element;
                 fileUploadEvent.call(parentElement, targetElement);
             }
@@ -203,7 +203,7 @@
             if (mutation.type === 'childList') {
                 for (let node of mutation.addedNodes) {
                     if (!(node instanceof HTMLElement)) continue;
-                    if (node.className && node.className.includes('file-multi-upload-input')) {
+                    if (node.className && node.className.includes('sequential-multi-file-input')) {
                         injectHtml(node)
                     }
                 }
@@ -217,7 +217,7 @@
             Object.assign(configObj, configObjCustom)
         }
 
-        Array.from(document.querySelectorAll(".file-multi-upload-input")).forEach(
+        Array.from(document.querySelectorAll(".sequential-multi-file-input")).forEach(
             function (element) {
                 injectHtml(element)
             })
