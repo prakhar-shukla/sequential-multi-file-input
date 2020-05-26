@@ -1,4 +1,4 @@
-# :paperclip:Sequential-multi-file-input
+# Sequential-multi-file-input :paperclip:
 Sequentially input multiple files through a single trigger point. 
 
 I have always wondered why there is no option to select multiple files one after another in the native input element. Although we can add ```multiple``` attribute in the input element to allow selection of more than one file, but all those files have to be selected in one go. Sometimes this behavior does not meet the requirements and can be non user friendly.
