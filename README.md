@@ -19,9 +19,9 @@ multiFileInput.init()
 By default, the element will be initialized with following options:
 ```javascript
 {
-   maxSize: 1 * 1024 * 1024,  //KB
+   maxSize: 10 * 1024 * 1024,  //KB
    maxFiles: 4,
-   allowedTypes: ["application/pdf", "image/jpeg"],
+   allowedTypes: ["application/pdf", "image/jpeg", "image/png"],
    interceptors: null,
    callback: null,
    autoInit: false
@@ -60,7 +60,7 @@ The default options can be overwritten by passing different values. The `maxSize
 
 ```javascript
   multiFileInput.init({
-      maxSize: 10 * 1024 * 1024, //KB
+      maxSize: 1 * 1024 * 1024, //KB
       maxFiles: 2,
       allowedTypes: 'all',
   });

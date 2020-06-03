@@ -11,9 +11,9 @@
 }(function () {
 
     const configObj = {
-        maxSize: 1 * 1024 * 1024,
+        maxSize: 10 * 1024 * 1024, //KB
         maxFiles: 4,
-        allowedTypes: ["application/pdf", "image/jpeg"],
+        allowedTypes: ["application/pdf", "image/jpeg", "image/png"],
         interceptors: null,
         callback: null,
         autoInit: false
