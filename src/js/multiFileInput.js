@@ -1,5 +1,3 @@
-"use strict";
-
 (function (factory) {
     if (typeof define === 'function' && define.amd) {
         define([], factory);
@@ -9,8 +7,9 @@
         window.multiFileInput = factory();
     }
 }(function () {
+    "use strict";
 
-    const configObj = {
+    var configObj = {
         maxSize: 10 * 1024 * 1024, //KB
         maxFiles: 4,
         allowedTypes: ["application/pdf", "image/jpeg", "image/png"],
@@ -21,18 +20,18 @@
 
     function fileUploadEvent(currentInput) {
 
-        let file = currentInput && currentInput.files[0];
+        var file = currentInput && currentInput.files[0];
         if (file) {
-            let sizeValidity = validateFileSize(file);
-            let typeValidity = validateFileType(file);
-            let validity = sizeValidity.valid && typeValidity.valid;
+            var sizeValidity = validateFileSize(file);
+            var typeValidity = validateFivarype(file);
+            var validity = sizeValidity.valid && typeValidity.valid;
 
             //Returns file name wrapped inside a styled div, along with error if any
-            let uploadedFileName = newUploadedFileName(file, currentInput.id, validity, sizeValidity, typeValidity);
+            var uploadedFileName = newUploadedFileName(file, currentInput.id, validity, sizeValidity, typeValidity);
             this.querySelector(".file-names").append(uploadedFileName);
 
             //Returms a new empty input element of type file
-            let newInput = getNewInput(currentInput.id);
+            var newInput = getNewInput(currentInput.id);
             this.querySelector(".file-inputs").append(newInput);
 
             //To handle activities after file upload, like hiding upload button
@@ -41,8 +40,8 @@
     }
 
     function fileUploadPostProcess(currentInput, validity) {
-        let multiInputs = this.querySelectorAll(".file-inputs input");
-        let errorFileName = this.querySelectorAll(".file-identifier.error");
+        var multiInputs = this.querySelectorAll(".file-inputs input");
+        var errorFileName = this.querySelectorAll(".file-identifier.error");
 
         if (multiInputs.length > 1) {
             this.querySelector(".initial-upload").classList.add("hidden");
@@ -72,14 +71,14 @@
         }
     }
 
-    function fileDeleteEvent(targetElement) {
-        let inputId = targetElement.dataset.inputId;
+    function fileDevareEvent(targetElement) {
+        var inputId = targetElement.dataset.inputId;
 
-        //Delete the corresponding file input element
+        //Devare the corresponding file input element
         targetElement.closest(".file-wrapper").remove();
         this.querySelector("#" + inputId).remove();
 
-        let multiInputs = this.querySelectorAll(".file-inputs input");
+        var multiInputs = this.querySelectorAll(".file-inputs input");
         this.querySelector(".add-more-file").classList.remove("hidden");
         if (multiInputs.length === 1) {
             this.querySelector(".add-more-file").classList.add("hidden");
@@ -88,17 +87,17 @@
     }
 
     function getNewInput(oldTargetId) {
-        let newInput = document.createElement("div");
+        var newInput = document.createElement("div");
         newInput.innerHTML = "<input class='file-input' type='file'></input>";
         newInput.firstElementChild.id = oldTargetId.split("input-n-")[0] + "input-n-" + ((oldTargetId.split("input-n-")[1] * 1) + 1);
         return newInput.firstElementChild;
     }
 
     function newUploadedFileName(file, targetId, validity, sizeValidity, typeValidity) {
-        let NAME_TEMPLATE_VALID = "<div class='file-wrapper'><div class='file-identifier'><span class='file-name'></span><button class='file-delete'>✖</button></div></div>";
-        let NAME_TEMPLATE_INVALID = "<div class='file-wrapper'><div class='file-identifier error'><span class='file-name'></span><button class='file-retry-upload action-btn upload-trigger'>Attach file</button></div><div class='error-msg'></div></div>";
+        var NAME_TEMPLATE_VALID = "<div class='file-wrapper'><div class='file-identifier'><span class='file-name'></span><button class='file-devare'>✖</button></div></div>";
+        var NAME_TEMPLATE_INVALID = "<div class='file-wrapper'><div class='file-identifier error'><span class='file-name'></span><button class='file-retry-upload action-btn upload-trigger'>Attach file</button></div><div class='error-msg'></div></div>";
 
-        let fileNameElement = document.createElement("div")
+        var fileNameElement = document.createElement("div")
         fileNameElement.innerHTML = validity ? NAME_TEMPLATE_VALID : NAME_TEMPLATE_INVALID;
         fileNameElement.querySelector(".file-identifier").setAttribute("data-input-id", targetId);
         fileNameElement.querySelector(".file-name").textContent = file.name;
@@ -113,7 +112,7 @@
     }
 
     function validateFileSize(file) {
-        let maxSize = configObj.maxSize;
+        var maxSize = configObj.maxSize;
         if (file.size <= maxSize) {
             return { valid: true }
         }
@@ -125,9 +124,9 @@
         }
     }
 
-    function validateFileType(file) {
-        let allowedTypes = configObj.allowedTypes;
-        if(allowedTypes === 'all'){
+    function validateFivarype(file) {
+        var allowedTypes = configObj.allowedTypes;
+        if (allowedTypes === 'all') {
             return { valid: true }
         }
         else if (allowedTypes.includes(file.type)) {
@@ -142,18 +141,18 @@
     }
 
     function triggerChooseFileEvent() {
-        let multiInputs = this.querySelectorAll(".file-inputs input");
+        var multiInputs = this.querySelectorAll(".file-inputs input");
         if (multiInputs.length <= configObj.maxFiles) {
             multiInputs[multiInputs.length - 1].click();
         }
     }
 
     function multiFileInputClickEventHandler(event) {
-        let element = event.target;
+        var element = event.target;
         while (element) {
             if (element.nodeName === "BUTTON" && element.className.includes("upload-trigger")) {
-                let parentElement = element.closest(".sequential-multi-file-input");
-                let parentId = parentElement.id;
+                var parentElement = element.closest(".sequential-multi-file-input");
+                var parentId = parentElement.id;
 
                 if (configObj.interceptors && configObj.interceptors.hasOwnProperty(parentId)
                     && typeof configObj.interceptors[parentId] === "function") {
@@ -162,10 +161,10 @@
                 }
                 triggerChooseFileEvent.call(parentElement);
             }
-            else if (element.nodeName === "BUTTON" && element.className.includes("file-delete")) {
-                let parentElement = element.closest(".sequential-multi-file-input");
-                let targetElement = element.closest(".file-identifier");
-                fileDeleteEvent.call(parentElement, targetElement);
+            else if (element.nodeName === "BUTTON" && element.className.includes("file-devare")) {
+                var parentElement = element.closest(".sequential-multi-file-input");
+                var targetElement = element.closest(".file-identifier");
+                fileDevareEvent.call(parentElement, targetElement);
             }
             element = element.parentNode;
         }
@@ -173,11 +172,11 @@
     }
 
     function multiFileInputUploadEventHandler(event) {
-        let element = event.target;
+        var element = event.target;
         while (element) {
             if (element.nodeName === "INPUT" && element.className.includes("file-input")) {
-                let parentElement = element.closest(".sequential-multi-file-input");
-                let targetElement = element;
+                var parentElement = element.closest(".sequential-multi-file-input");
+                var targetElement = element;
                 fileUploadEvent.call(parentElement, targetElement);
             }
 
@@ -186,10 +185,10 @@
     }
 
     function injectHtml(element) {
-        const TEMPLATE = '<div class="interactor"> <div class="placeholder"> <div class="label"></div> <div class="description"></div> </div> <div class="actions"> <button class="initial-upload action-btn upload-trigger">Upload</button> </div> </div> <div class="file-names"> </div> <button class="add-more-file action-btn upload-trigger hidden">Attach more files</button> <div class="file-inputs"></div>';
+        var TEMPLATE = '<div class="interactor"> <div class="placeholder"> <div class="label"></div> <div class="description"></div> </div> <div class="actions"> <button class="initial-upload action-btn upload-trigger">Upload</button> </div> </div> <div class="file-names"> </div> <button class="add-more-file action-btn upload-trigger hidden">Attach more files</button> <div class="file-inputs"></div>';
         if (!element.querySelector('.interactor')) {
-            let styledElement = document.createElement('div');
-            let initialInput = getNewInput(element.id + "-input-n-0");
+            var styledElement = document.createElement('div');
+            var initialInput = getNewInput(element.id + "-input-n-0");
 
             styledElement.innerHTML = TEMPLATE;
             styledElement.querySelector('.interactor .label').textContent = element.dataset.label || "Upload Documents";
@@ -202,9 +201,9 @@
     }
 
     function mutationCallback(mutationList) {
-        for (let mutation of mutationList) {
+        for (var mutation of mutationList) {
             if (mutation.type === 'childList') {
-                for (let node of mutation.addedNodes) {
+                for (var node of mutation.addedNodes) {
                     if (!(node instanceof HTMLElement)) continue;
                     if (node.className && node.className.includes('sequential-multi-file-input')) {
                         injectHtml(node)
@@ -231,8 +230,8 @@
 
         //Mutation Observer
         if (configObj.autoInit) {
-            const observer = new MutationObserver(mutationCallback);
-            const config = { childList: true, subtree: true };
+            var observer = new MutationObserver(mutationCallback);
+            var config = { childList: true, subtree: true };
             observer.observe(document.body, config)
         }
     }
